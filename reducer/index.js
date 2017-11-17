@@ -1,7 +1,11 @@
 
 import { combineReducers } from 'redux' ;
 
+import scanningReducer from './scanning' ;
 
-const rootReducer = (state={}, action) => state ;
+
+const rootReducer = combineReducers({
+    scanning : scanningReducer,
+}) ;
 
 export default rootReducer ;

@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react' ;
+import PropTypes from 'prop-types' ;
 import { Platform, StyleSheet, View, Text } from 'react-native' ;
 
 import Camera from 'react-native-camera' ;
@@ -7,13 +8,24 @@ import Camera from 'react-native-camera' ;
 
 export default class Scanner extends Component {
 
+    static propTypes = {
+        onCodeRead : PropTypes.func,
+    } ;
+
+    onCodeRead = result => {
+        const {type, data} = result ;
+        const {onCodeRead} = this.props ;
+        console.log(result) ;
+        onCodeRead && onCodeRead(type, data) ;
+    } ;
+
     render () {
         const {style={}} = this.props ;
 
         const rootStyle = StyleSheet.flatten([styles.camera, style]) ;
 
         return (
-            <Camera onBarCodeRead={ e => console.log(e) } style={ rootStyle }>
+            <Camera onBarCodeRead={ this.onCodeRead } style={ rootStyle }>
                 <View style={ styles.rectangleContainer }>
                     <View style={ styles.rectangle }></View>
                 </View>
