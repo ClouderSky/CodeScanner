@@ -5,6 +5,8 @@ import storage from 'redux-persist/es/storage' ;
 import { createLogger } from 'redux-logger' ;
 import createSagaMiddleware from 'redux-saga' ;
 
+import { startup } from './reducer' ;
+
 
 export default function (rootReducer, rootSaga) {
     // 创建saga中间件
@@ -29,7 +31,7 @@ export default function (rootReducer, rootSaga) {
 
     // 创建store并从persist中提取数据
     const store = createStore(reducer, applyMiddleware(...middleware)) ;
-    persistStore(store) ;
+    persistStore(store, {}, () => store.dispatch(startup())) ;
 
     // 运行saga
     sagaMiddleware.run(rootSaga) ;
